@@ -1,3 +1,5 @@
+const SUPABASE_URL = 'https://lleveuxsfkjzpoxwlhqb.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsZXZldXhzZmtqenBveHdsaHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MTQzNDEsImV4cCI6MjA5MTE5MDM0MX0.FjW9SWaPgRJfqgnzD3HIFtz3ea-pmnFMdbh_vq5jmyQ';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const loginScreen = document.getElementById('login-screen');
