@@ -59,11 +59,18 @@ window.logout = async function() {
 };
 
 function setupRealtime() {
+    let realtimeTimer;
     db.channel('custom-all-channel')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, () => { loadTeams(); })
-    .subscribe();
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, () => {
+            clearTimeout(realtimeTimer);
+            realtimeTimer = setTimeout(() => {
+                // Don't reload if the user is actively editing a cell
+                if (document.activeElement?.contentEditable === 'true') return;
+                loadTeams();
+            }, 1500);
+        })
+        .subscribe();
 }
-
 const splitData = (str) => {
     if (!str || typeof str !== 'string' || str.trim() === '') return [];
     return str.split(/,|\n/).map(s => s.trim());
@@ -73,6 +80,7 @@ const splitData = (str) => {
 window.updateField = async function(teamName, column, newValue) {
     const { error } = await db.from('teams').update({ [column]: newValue }).eq('team', teamName);
     if (error) { alert("Ошибка: " + error.message); loadTeams(); }
+    // No loadTeams() on success — realtime will handle it when focus is safe
 };
 
 window.updateArrayField = async function(teamName, column, index, newValue) {
@@ -81,15 +89,35 @@ window.updateArrayField = async function(teamName, column, index, newValue) {
 
     let arr = splitData(team[column]);
     while (arr.length <= index) arr.push('');
-    arr[index] = newValue.replace(/,/g, '').trim(); 
-    await window.updateField(teamName, column, arr.join(', '));
+    arr[index] = newValue.replace(/,/g, '').trim();
+    team[column] = arr.join(', '); // update local state
+
+    await window.updateField(teamName, column, team[column]);
+};
+
+window.updateArrayField = async function(teamName, column, index, newValue) {
+    const team = teamsData.find(t => t.team === teamName);
+    if (!team) return;
+
+    let arr = splitData(team[column]);
+    while (arr.length <= index) arr.push('');
+    arr[index] = newValue.replace(/,/g, '').trim();
+    team[column] = arr.join(', '); // update local state
+
+    await window.updateField(teamName, column, team[column]);
 };
 
 // --- СОХРАНЕНИЕ ЧЕКБОКСОВ (НОВОЕ) ---
 window.updateLeaderArrival = async function(teamName, isChecked) {
+    const team = teamsData.find(t => t.team === teamName);
+    if (team) team.arrived_leader = isChecked; 
+    renderTeams();
+
     const { error } = await db.from('teams').update({ arrived_leader: isChecked }).eq('team', teamName);
-    if (error) alert("Ошибка сохранения: " + error.message);
-    loadTeams();
+    if (error) {
+        alert("Ошибка сохранения: " + error.message);
+        loadTeams(); // only reload from DB if something went wrong
+    }
 };
 
 window.updateMemberArrival = async function(teamName, index, isChecked) {
@@ -99,10 +127,14 @@ window.updateMemberArrival = async function(teamName, index, isChecked) {
     let aArr = splitData(team.arrived_members);
     while (aArr.length <= index) aArr.push('false');
     aArr[index] = isChecked ? 'true' : 'false';
+    team.arrived_members = aArr.join(', '); // update local state immediately
+    renderTeams();                           // re-render from memory (instant)
 
-    const { error } = await db.from('teams').update({ arrived_members: aArr.join(', ') }).eq('team', teamName);
-    if (error) alert("Ошибка сохранения: " + error.message);
-    loadTeams();
+    const { error } = await db.from('teams').update({ arrived_members: team.arrived_members }).eq('team', teamName);
+    if (error) {
+        alert("Ошибка сохранения: " + error.message);
+        loadTeams(); // only reload from DB if something went wrong
+    }
 };
 
 window.deleteMember = async function(teamName, index) {
