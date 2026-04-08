@@ -20,17 +20,29 @@
             <div style="text-align: left;">
                 <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; display: block;">Email</label>
                 <input type="email" id="emailAuth" placeholder="admin@example.com" required 
-                       style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif;">
+                       style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif; outline: none;">
             </div>
             <div style="text-align: left;">
                 <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; display: block;">Пароль</label>
                 <input type="password" id="passwordAuth" placeholder="••••••••" required 
-                       style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif;">
+                       style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif; outline: none;">
             </div>
-            <button type="submit" class="btn-primary" style="padding: 14px; font-size: 1rem; border-radius: 8px; font-weight: 600; margin-top: 10px;">
+            <button type="submit" class="btn-primary" style="padding: 14px; font-size: 1rem; border-radius: 8px; font-weight: 600; margin-top: 10px; cursor: pointer;">
                 Войти в систему
             </button>
         </form>
+
+        <div style="display: flex; align-items: center; margin: 25px 0;">
+            <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
+            <span style="padding: 0 15px; color: var(--text-muted); font-size: 0.85rem; font-weight: 500;">или</span>
+            <div style="flex: 1; height: 1px; background-color: var(--border);"></div>
+        </div>
+
+        <button onclick="loginWithGoogle()" type="button" 
+                style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; background: white; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--text-main); font-family: 'Inter', sans-serif; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+            Войти через Google
+        </button>
     </div>
 
     <script src="script.js"></script>

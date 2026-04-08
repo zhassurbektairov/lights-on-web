@@ -55,6 +55,17 @@ if (loginForm) {
     });
 }
 
+async function loginWithGoogle() {
+    const { data, error } = await db.auth.signInWithOAuth({
+        provider: 'google',
+    });
+    
+    if (error) {
+        console.error("Ошибка входа:", error.message);
+        alert("Не удалось войти через Google");
+    }
+}
+
 window.logout = async function() {
     await db.auth.signOut();
     window.location.href = 'index.html';
