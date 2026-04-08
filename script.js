@@ -58,8 +58,10 @@ if (loginForm) {
 async function loginWithGoogle() {
     const { data, error } = await db.auth.signInWithOAuth({
         provider: 'google',
+        options: {
+            redirectTo: window.location.origin + window.location.pathname 
+        }
     });
-    
     if (error) {
         console.error("Ошибка входа:", error.message);
         alert("Не удалось войти через Google");
