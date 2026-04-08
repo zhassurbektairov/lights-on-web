@@ -209,8 +209,10 @@ window.renderTeams = function() {
         return searchString.includes(searchTerm);
     });
 
-    document.getElementById('stats').innerText = searchTerm ? `Найдено: ${filteredData.length} из ${teamsData.length}` : `Всего команд: ${teamsData.length}`;
     tableBody.innerHTML = '';
+
+    let partialCount = 0;
+    let fullCount = 0;
 
     filteredData.forEach(item => {
         const row = document.createElement('tr');
@@ -218,12 +220,19 @@ window.renderTeams = function() {
         const mArr = splitData(item.members);
         const tArr = splitData(item.tgs);
         const nArr = splitData(item.numbers);
-        const aArr = splitData(item.arrived_members); // Массив чекбоксов участников
+        const aArr = splitData(item.arrived_members); 
         const maxLen = Math.max(mArr.length, tArr.length, nArr.length, 0);
 
         let arrivedCount = item.arrived_leader ? 1 : 0;
         for (let i = 0; i < maxLen; i++) {
             if (aArr[i] === 'true') arrivedCount++;
+        }
+
+        const totalMembers = maxLen + 1;
+        if (arrivedCount === totalMembers && totalMembers > 0) {
+            fullCount++; 
+        } else if (arrivedCount > 0 && arrivedCount < totalMembers) {
+            partialCount++;
         }
 
         let rosterHTML = '<div class="members-list">';
@@ -263,6 +272,7 @@ window.renderTeams = function() {
                 <span>➕ Добавить</span>
             </div></div>`;
 
+        // Левая колонка
         row.innerHTML = `
             <td style="vertical-align: top;">
                 <div class="team-design-card">
@@ -270,7 +280,7 @@ window.renderTeams = function() {
                     
                     <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
                         <div class="team-size-wrap">
-                            Всего: <span class="team-size-number">${item.team_len || 0}</span>
+                            Всего: <span class="team-size-number">${totalMembers}</span>
                         </div>
                         <div class="team-size-wrap">
                             Пришли: <span class="team-arrived-badge">${arrivedCount}</span>
@@ -284,6 +294,21 @@ window.renderTeams = function() {
         `;
         tableBody.appendChild(row);
     });
+
+    const statsContainer = document.getElementById('stats');
+    const baseText = searchTerm ? `Найдено: ${filteredData.length} из ${teamsData.length}` : `Всего команд: ${teamsData.length}`;
+    
+    statsContainer.innerHTML = `
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1rem; color: var(--text-muted);">${baseText}</span>
+            <span style="background: #fffbeb; color: #d97706; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; border: 1px solid #fde68a;">
+                ⏳ Частично: <b>${partialCount}</b>
+            </span>
+            <span style="background: #ecfdf5; color: #059669; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; border: 1px solid #a7f3d0;">
+                ✅ Вся команда: <b>${fullCount}</b>
+            </span>
+        </div>
+    `;
 }
 
 init();
