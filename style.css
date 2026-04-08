@@ -428,6 +428,127 @@ tbody td:last-child {
     font-size: 1rem;
 }
 
+/* =========================================
+   9. ИНТЕРАКТИВНЫЕ ФИЛЬТРЫ-БЕЙДЖИ
+   ========================================= */
+.stat-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-badge:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.stat-badge:active {
+    transform: translateY(1px);
+}
+
+/* Активное состояние фильтра */
+.stat-badge.active {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+/* Цветовые вариации бейджей */
+.badge-absent {
+    background: #fef2f2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+}
+
+.badge-partial {
+    background: #fffbeb;
+    color: #b45309;
+    border-color: #fcd34d;
+}
+
+.badge-full {
+    background: #ecfdf5;
+    color: #047857;
+    border-color: #6ee7b7;
+}
+
+/* =========================================
+   10. ПЕРЕКЛЮЧАТЕЛЬ И ГЛОБАЛЬНАЯ СТАТИСТИКА
+   ========================================= */
+.view-toggle {
+    display: flex;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.btn-toggle {
+    background: transparent;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-toggle.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.global-stats-panel {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    flex: 1;
+}
+
+.stat-box.success {
+    border-color: #6ee7b7;
+    background: #ecfdf5;
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
 .modal-title { margin-top: 0; margin-bottom: 16px; font-size: 1.2rem; color: var(--text-main); }
 .modal-field { margin-bottom: 12px; }
 .modal-field label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.85rem; }
