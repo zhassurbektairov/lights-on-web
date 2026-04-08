@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Teams</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="admin-page">
+    <div id="admin-content" style="display: none;">
+        <nav class="navbar">
+            <div class="nav-container">
+                <span class="brand">Admin<span>Panel</span></span>
+                <button id="logoutBtn" class="btn-secondary" onclick="window.logout()">Выйти</button>
+            </div>
+        </nav>
+
+        <main class="content-container">
+            <header class="content-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h1 style="margin: 0; margin-bottom: 5px;">Все команды</h1>
+                    <p id="stats" style="margin: 0; color: var(--text-muted);">Загрузка данных...</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Поиск по имени, команде, TG..." onkeyup="window.renderTeams()">
+                </div>
+            </header>
+            
+            <div class="card table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 250px;">Команда</th>
+                                <th>Состав (Лидер и участники)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
