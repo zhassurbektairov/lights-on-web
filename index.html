@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Teams</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="login-screen" class="container">
+        <h1>Вход в систему</h1>
+        <form id="loginForm" class="input-grid">
+            <input type="email" id="emailAuth" placeholder="Email" required>
+            <input type="password" id="passwordAuth" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+
+    <div id="main-content" class="container" style="display: none;">
+        <div class="header-row">
+            <h1>Управление командами</h1>
+            <button id="logoutBtn" class="delete-btn">Выйти</button>
+        </div>
+        
+        <form id="teamForm" class="input-grid">
+            <input type="text" id="teams" placeholder="Название команды" required>
+            <input type="number" id="team_len" placeholder="Кол-во человек" required>
+            <input type="text" id="leader" placeholder="ФИО Лидера" required>
+            <input type="text" id="tg" placeholder="Telegram лидера">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="number" placeholder="Телефон лидера">
+            <textarea id="members" placeholder="Список участников" rows="2"></textarea>
+            <textarea id="tgs" placeholder="Telegram участников" rows="2"></textarea>
+            <textarea id="numbers" placeholder="Телефоны участников" rows="2"></textarea>
+            <button type="submit" id="addBtn">Добавить команду</button>
+        </form>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Команда</th>
+                        <th>Лидер</th>
+                        <th>Контакты</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody id="teamsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
