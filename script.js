@@ -516,7 +516,7 @@ window.renderTeams = function() {
     const stats = document.getElementById('stats');
     if (stats) stats.innerHTML = `
         <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <span style="font-size: 1rem; cursor:pointer; border-bottom:${currentFilter==='all'?'2px solid var(--primary)':'none'}" onclick="window.setFilter('all')">Показано: ${finalData.length}</span>
+            <span style="font-size: 1rem; cursor:pointer; border-bottom:${currentFilter==='all'?'2px solid var(--primary)':'none'}" onclick="window.setFilter('all')">Показано: ${finalData.length}/${absentCount+partialCount+fullCount}</span>
             <span class="stat-badge badge-absent ${currentFilter==='absent'?'active':''}" onclick="window.setFilter('absent')">❌ Не пришли: <b>${absentCount}</b></span>
             <span class="stat-badge badge-partial ${currentFilter==='partial'?'active':''}" onclick="window.setFilter('partial')">⏳ Частично: <b>${partialCount}</b></span>
             <span class="stat-badge badge-full ${currentFilter==='full'?'active':''}" onclick="window.setFilter('full')">✅ Вся команда: <b>${fullCount}</b></span>
@@ -553,7 +553,7 @@ window.renderSolo = function() {
     if (stats) {
         stats.innerHTML = `
         <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-            <span style="font-size: 1rem; cursor:pointer; border-bottom:${currentSoloFilter === 'all' ? '2px solid var(--primary)' : 'none'}" onclick="window.setSoloFilter('all')">Показано: ${filtered.length}</span>
+            <span style="font-size: 1rem; cursor:pointer; border-bottom:${currentSoloFilter === 'all' ? '2px solid var(--primary)' : 'none'}" onclick="window.setSoloFilter('all')">Показано: ${filtered.length}/${arrivedCount+absentCount}</span>
             
             <span onclick="window.setSoloFilter('absent')" style="background: ${currentSoloFilter === 'absent' ? '#fca5a5' : '#fef2f2'}; color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; border: 1px solid #fecaca; cursor: pointer; transition: 0.2s;">
                 ❌ Не пришли: <b>${absentCount}</b>
